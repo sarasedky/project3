@@ -1,7 +1,10 @@
 
 
 import java.io.IOException;
+
+
 import java.io.PrintWriter;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
@@ -11,11 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+
 /**
  * Servlet implementation class FirstServlet
  */
 @WebServlet(description = "My First Servlet", urlPatterns = { "/FirstServlet" , "/FirstServlet.do"},
-initParams = {@WebInitParam(name="id",value="1"),@WebInitParam(name="name",value="pankaj")})
+initParams = {@WebInitParam(name="id",value="1")})
 public class FirstServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -31,7 +35,7 @@ public class FirstServlet extends HttpServlet {
     public FirstServlet() {
         super();
         // TODO Auto-generated constructor stub
-        
+     
     }
 
 	/**
@@ -39,9 +43,7 @@ public class FirstServlet extends HttpServlet {
 	 */
 protected void doGet(HttpServletRequest request, HttpServletResponse response)
 throws ServletException, IOException {
-		
 	PrintWriter out = response.getWriter();
-	
 	out.println(CSS_START + " <style type=\"text/css\">\r\n" + 
 			"        center { color: yellow;\r\n" + 
 			"font-size:150%;		}\r\n" + 
@@ -55,7 +57,7 @@ throws ServletException, IOException {
 			"<center>Enter numbers of jobs </center>\r\n" + 
 			"<br/>\r\n" + 
 			"<center>\r\n" + 
-			"Number of jobs:<input type=\"numbers\" size=\"10\"  name=\"name\"> \r\n" + 
+			"Number of jobs:<input type=\"numbers\" size=\"10\"  name=\"numberOfJobs\"> \r\n" + 
 			"<br/>\r\n" + 
 			"<br />\r\n" + 
 			"\r\n" + 
@@ -65,14 +67,10 @@ throws ServletException, IOException {
 			"</center>\r\n" + 
 			"</form>" +HTML_END);
 
-	for(int i=0;i<10;i++) {
-		//create runnable object and thread to run them
-		Myclass demo1=new Myclass(i); 
-		Thread t1=new Thread(demo1);
-		//start the thread
-		t1.start(); 
-	}
-		
+	
+	
+
+
 	
 	}
 	
@@ -83,7 +81,19 @@ throws ServletException, IOException {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		
+		int numberOfJobs=Integer.parseInt(request.getParameter("numberOfJobs"));
+		PrintWriter out = response.getWriter();
+		out.print("sara");
+		for(int i=0;i<numberOfJobs;i++) {
+			//create runnable object and thread to run them
+			Myclass demo1=new Myclass(i); 
+			Thread t1=new Thread(demo1);
+			//start the thread
+			t1.start(); 
+			}
+			
+			}
+	
 	}
 
-}
+
