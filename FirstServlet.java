@@ -1,10 +1,14 @@
+package com.ibm.executabe;
 
 
 import java.io.IOException;
 
 
-import java.io.PrintWriter;
 
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
@@ -23,11 +27,7 @@ initParams = {@WebInitParam(name="id",value="1")})
 public class FirstServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	public static final String CSS_START= "<html><head>";
-	public static final String CSS_END="</head></html>";
-	public static final String HTML_START="<html><body>";
-	public static final String HTML_END="</body></html>";
- 
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -43,35 +43,8 @@ public class FirstServlet extends HttpServlet {
 	 */
 protected void doGet(HttpServletRequest request, HttpServletResponse response)
 throws ServletException, IOException {
-	PrintWriter out = response.getWriter();
-	out.println(CSS_START + " <style type=\"text/css\">\r\n" + 
-			"        center { color: yellow;\r\n" + 
-			"font-size:150%;		}\r\n" + 
-			"\r\n" + 
-			" body {background-color: maroon; }\r\n" + 
-			"\r\n" + 
-			" </style>"+ CSS_END );
-	
-	out.println(HTML_START + "<form method=\"post\" action=\"FirstServlet\">\r\n" + 
-			"\r\n" + 
-			"<center>Enter numbers of jobs </center>\r\n" + 
-			"<br/>\r\n" + 
-			"<center>\r\n" + 
-			"Number of jobs:<input type=\"numbers\" size=\"10\"  name=\"numberOfJobs\"> \r\n" + 
-			"<br/>\r\n" + 
-			"<br />\r\n" + 
-			"\r\n" + 
-			"\r\n" + 
-			"<input type=\"submit\" value=\"Send\"> \r\n" + 
-			"\r\n" + 
-			"</center>\r\n" + 
-			"</form>" +HTML_END);
-
-	
 	
 
-
-	
 	}
 	
 
@@ -81,18 +54,36 @@ throws ServletException, IOException {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		int numberOfJobs=Integer.parseInt(request.getParameter("numberOfJobs"));
-		PrintWriter out = response.getWriter();
-		out.print("sara");
-		for(int i=0;i<numberOfJobs;i++) {
-			//create runnable object and thread to run them
-			Myclass demo1=new Myclass(i); 
-			Thread t1=new Thread(demo1);
-			//start the thread
-			t1.start(); 
-			}
+	
+		int numberOfThreads=Integer.parseInt(request.getParameter("numberOfThreads"));
+		int listOfjob=Integer.parseInt(request.getParameter("listOfjob"));
+		ExecutorService executor = Executors.newFixedThreadPool(numberOfThreads);
+		
+	
+	PrintWriter out = response.getWriter();
+	
+
+		for(int i=0;i<listOfjob;i++) {
+			//create runnable object and thread to run the
+			job demo1=new job(i); 
+			//	Thread t1=new Thread(demo1);
 			
+			executor.submit(demo1);
+			//start the thread
+		//t1.start(); 
+			response.getWriter().println("job number" +i);
+			//response.getWriter().println("numberOfThreads" +numberOfThreads);
+			
+			
+		
 			}
+		
+	
+	
+	
+	
+}
+
 	
 	}
 
